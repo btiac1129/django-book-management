@@ -3,10 +3,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 from django.views.generic import TemplateView
+from books import views as books_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+#    path('books/', include('books.urls')),
+    path('', books_views.book_list, name="book_list"),
 #   path('', TemplateView.as_view(template_name='root.html'), name='root'),
 ]
 

@@ -20,7 +20,7 @@ class Book(models.Model):
     publisher = models.CharField(max_length=30)
     subject_keyword = models.CharField(max_length=40, unique=True)
     issued_date = models.DateField()
-    isbn = models.CharField(max_length=13)
+    isbn = models.CharField(max_length=17)
     isOnload = models.BooleanField()
     reservation_number = models.IntegerField()
 
