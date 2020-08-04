@@ -13,12 +13,12 @@ class Book(models.Model):
         LITERATURE = ("800", "800 (Literature)")
         HISTORY = ("900", "900 (History)")
 
-    class_number = models.CharField(max_length=4, unique=True,
+    class_number = models.CharField(max_length=4,
                                     choices=ClassChoices.choices)
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
-    subject_keyword = models.CharField(max_length=40, unique=True)
+    subject_keyword = models.CharField(max_length=40)
     issued_date = models.DateField()
     isbn = models.CharField(max_length=17)
     isOnload = models.BooleanField()
