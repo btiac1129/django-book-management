@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView as AuthLogoutView
 from .forms import SignupForm
@@ -30,7 +31,8 @@ def signup(request):
         'form': form,
     })
 
-#def profile(request):
-#    return render(request, 'accounts/profile.html', {
-#
-#    })
+@login_required
+def profile(request):
+    return render(request, 'accounts/profile.html', {
+
+    })

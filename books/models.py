@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 class Book(models.Model):
@@ -21,7 +22,9 @@ class Book(models.Model):
     subject_keyword = models.CharField(max_length=40)
     issued_date = models.DateField()
     isbn = models.CharField(max_length=17)
-    isOnload = models.BooleanField()
-    reservation_number = models.IntegerField()
+    isOnload = models.BooleanField(default=False)
+    reservation_number = models.IntegerField(default=0)
+
+
 
 
