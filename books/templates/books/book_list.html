@@ -25,7 +25,7 @@
                                 <rect width="100%" height="100%" fill="#FF0000"></rect>
                                 <text x="50%" y="50%" fill="#FF0000" dy=".3em">32x32</text>
                             </svg>
-                            {% elif book.reservation_number and not book.isOnload %}
+                            {% elif book.reservation_number != 0 and not book.isOnload %}
                             <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
                                 <title>Placeholder</title>
                                 <rect width="100%" height="100%" fill="#FFA500"></rect>
@@ -38,10 +38,18 @@
                                 <text x="50%" y="50%" fill="#28a745" dy=".3em">32x32</text>
                             </svg>
                             {% endif %}
-                            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                <strong class="d-block text-gray-dark">{{ book.title }}</strong>
-                                {{ book.author }}, {{ book.publisher }} ({{ book.reservation_number }}명 예약 중)
-                            </p>
+                            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <strong class="d-block text-gray-dark">{{ book.title }}</strong>
+                                    <span>
+                                        {% if not book.isOnload and book.reservation_number == 0%}
+                                        <a href="{% url 'books:loan' book.pk %}" class="mx-3">대여하기</a>
+                                        {% endif %}
+                                        <a href="{% url 'books:reserve' book.pk %}">예약하기</a>
+                                    </span>
+                                </div>
+                                <span class="d-block">{{ book.author }}, {{ book.publisher }} ({{ book.reservation_number }}명 예약 중)</span>
+                            </div>
                         </div>
                         {% endif %}
                         {% endfor %}

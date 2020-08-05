@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView as AuthLogoutView
 from .forms import SignupForm
+from books.models import Book
 
 login = LoginView.as_view(template_name='accounts/login_form.html')
 
@@ -32,7 +33,14 @@ def signup(request):
     })
 
 @login_required
-def profile(request):
+def profile(request, username):
+    user = request.user
+    loan_record = user.loan_record.get_queryset()
+    onloaded_books = user.onloaded_books.get_queryset()
+    reserved_books = user.reserved_books.get_queryset()
     return render(request, 'accounts/profile.html', {
-
+        'user': user,
+        'loan_record': loan_record,
+        'onloaded_books': onloaded_books,
+        'reserved_books': reserved_books,
     })

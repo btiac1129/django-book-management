@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.db import models
 
 class Book(models.Model):
@@ -24,6 +25,11 @@ class Book(models.Model):
     isbn = models.CharField(max_length=17)
     isOnload = models.BooleanField(default=False)
     reservation_number = models.IntegerField(default=0)
+
+    def reservation_number_gte_zero(self):
+        if self.reservation_number < 0:
+            messages.info('reservation number must be greater than zero!')
+            self.reservation_number += abs(self.reservation_number)
 
 
 

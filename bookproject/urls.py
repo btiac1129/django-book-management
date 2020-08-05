@@ -6,10 +6,10 @@ from django.views.generic import TemplateView
 from books import views as books_views
 
 urlpatterns = [
+    path('', books_views.book_list, name="book_list"),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-#    path('books/', include('books.urls')),
-    path('', books_views.book_list, name="book_list"),
+    path('books/', include('books.urls')),
 #   path('', TemplateView.as_view(template_name='root.html'), name='root'),
 ]
 

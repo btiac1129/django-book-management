@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from .models import Book
 
 def book_list(request):
@@ -15,3 +16,57 @@ def book_list(request):
         'q': q,
         'class_list': class_list,
     })
+
+def book_detail(request, pk):
+    book_id = pk
+    book = Book.objects.get(pk=pk)
+    return render(request, 'books/book_detail.html', {
+        'book': book,
+    })
+
+def book_search(request):
+    pass
+
+@login_required
+def loan_book(request, pk):
+    book_id = pk
+    user = request.user
+    book = Book.objects.get(pk=book_id)
+    user.loan_record.add(book)
+    user.onloaded_books.set([book])
+    book.isOnload = True
+    book.save()
+    return redirect('accounts:profile', username=user.username)
+
+@login_required
+def reserve_book(request, pk):
+    book_id = pk
+    user = request.user
+    book = Book.objects.get(pk=book_id)
+    user.reserved_books.add(book)
+    book.reservation_number += 1
+    user.save()
+    book.save()
+    return redirect('accounts:profile', username=user.username)
+
+@login_required
+def return_book(request, pk):
+    book_id = pk
+    user = request.user
+    book = Book.objects.get(pk=book_id)
+    user.onloaded_books.remove(book)
+    book.isOnload = False
+    user.save()
+    book.save()
+    return redirect('accounts:profile', username=user.username)
+
+@login_required
+def cancel_book(request, pk):
+    book_id = pk
+    user = request.user
+    book = Book.objects.get(pk=book_id)
+    user.reserved_books.remove(book)
+    book.reservation_number -= 1
+    user.save()
+    book.save()
+    return redirect('accounts:profile', username=user.username)
