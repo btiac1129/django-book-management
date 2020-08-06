@@ -40,7 +40,18 @@
                             {% endif %}
                             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                                 <div class="d-flex justify-content-between align-items-center w-100">
-                                    <strong class="d-block text-gray-dark">{{ book.title }}</strong>
+                                    <strong class="d-block text-gray-dark">
+                                        <a id="modal_link" href="{% url 'books:detail' book.pk %}" data-toggle="modal" data-target="#book_detail_modal">
+                                            {{ book.title }}
+                                        </a>
+                                    </strong>
+                                    <div class="modal" tabindex="-1" role="dialog" id="book_detail_modal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content" id="modal_content">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- {% include "books/book_detail.html" %}-->
                                     <span>
                                         {% if not book.isOnload and book.reservation_number == 0%}
                                         <a href="{% url 'books:loan' book.pk %}" class="mx-3">대여하기</a>
@@ -63,3 +74,12 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block js_content %}
+<script>
+    $('#modal_link').on('click', function() {
+        $("#modal_content").load($('#modal_link')[0].href);
+    });
+
+</script>
+{% endblock js_content %}

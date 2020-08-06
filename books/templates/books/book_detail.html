@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="modal-header">
+    <h5 class="modal-title">책 이름</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-</body>
-</html>
+<div class="modal-body">
+    <h6>책 정보</h6>
+    <p>작가 : {{ book.author }}</p>
+    <p>출판사 : {{ book.publisher }}</p>
+    <p>키워드 : {{ book.subject_keyowrd }}</p>
+    <p>분류 번호 : {{ book.class_number }}</p>
+    <p>발행일 : {{ book.issued_date }}</p>
+    <p>ISBM : {{ book.isbn }}</p>
+    <hr>
+    <h6>책 상태</h6>
+    {% if book.reservation_number > 0 or book.isOnload %}
+    <p>대출 불가</p>
+    <p>{{ book.reservation_number }}명 예약 중.</p>
+    {% else %}
+    <p>대출 가능</p>
+    {% endif %}
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>

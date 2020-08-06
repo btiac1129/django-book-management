@@ -4,8 +4,9 @@ from . import views
 app_name = 'books'
 
 urlpatterns = [
-    path('loan/<int:pk>', views.loan_book, name='loan'),
-    path('reserve/<int:pk>', views.reserve_book, name='reserve'),
-    path('return/<int:pk>', views.return_book, name='return'),
-    path('cancel/<int:pk>', views.cancel_book, name='cancel'),
+    path('<int:pk>/loan/', views.loan_book, name='loan'),
+    path('<int:pk>/reserve', views.reserve_book, name='reserve'),
+    path('<int:pk>/return/', views.return_book, name='return'),
+    path('<int:pk>/cancel/', views.cancel_book, name='cancel'),
+    path('<int:pk>/detail/', views.book_detail, name='detail'),
 ]

@@ -10,7 +10,7 @@ def book_list(request):
         class_list.append(cc[0])
     q = request.GET.get('q', '')
     if q:
-        book_list = book_list.filter(message__icontains=q)
+        book_list = book_list.filter(title__icontains=q)
     return render(request, 'books/book_list.html', {
         'book_list': book_list,
         'q': q,
@@ -24,8 +24,13 @@ def book_detail(request, pk):
         'book': book,
     })
 
-def book_search(request):
-    pass
+def book_search(request, title):
+    book_title = title
+    qs = request.GET
+    book = Book.objects.filter(title__contains=book_title)
+    return render(request, 'books/book_search_form.html', {
+        'book': book,
+    })
 
 @login_required
 def loan_book(request, pk):
